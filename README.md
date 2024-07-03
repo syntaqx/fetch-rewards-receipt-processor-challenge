@@ -1,7 +1,10 @@
 # Receipt Processor
 
-Build a webservice that fulfils the documented API. The API is described below. A formal definition is provided 
-in the [api.yml](./api.yml) file, but the information in this README is sufficient for completion of this challenge. We will use the 
+[![Go Report Card](https://goreportcard.com/badge/github.com/syntaqx/fetch-rewards-receipt-processor-challenge)](https://goreportcard.com/report/github.com/syntaqx/fetch-rewards-receipt-processor-challenge)
+[![codecov](https://codecov.io/gh/syntaqx/fetch-rewards-receipt-processor-challenge/graph/badge.svg?token=V7SJ4M7J8S)](https://codecov.io/gh/syntaqx/fetch-rewards-receipt-processor-challenge)
+
+Build a webservice that fulfils the documented API. The API is described below. A formal definition is provided
+in the [api.yml](./api.yml) file, but the information in this README is sufficient for completion of this challenge. We will use the
 described API to test your solution.
 
 Provide any instructions required to run your application.
