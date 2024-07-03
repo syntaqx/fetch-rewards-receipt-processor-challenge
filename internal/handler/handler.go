@@ -21,7 +21,9 @@ type Handler struct {
 
 func NewHandler(validate *validator.Validate, repo repository.ReceiptRepository) *Handler {
 	// Register the custom validation function
-	validate.RegisterValidation("price", validatePrice)
+	if err := validate.RegisterValidation("price", validatePrice); err != nil {
+		panic(err)
+	}
 	return &Handler{validate: validate, repo: repo}
 }
 
@@ -73,7 +75,9 @@ func (h *Handler) ProcessReceipt(w http.ResponseWriter, r *http.Request) {
 	h.repo.SaveReceipt(id.String(), receipt, points)
 
 	response := &ProcessReceiptResponse{ID: id}
-	render.Render(w, r, response)
+	if err := render.Render(w, r, response); err != nil {
+		http.Error(w, "Failed to render response", http.StatusInternalServerError)
+	}
 }
 
 // GetPointsResponse represents the response for getting receipt points
@@ -104,7 +108,9 @@ func (h *Handler) GetReceiptPoints(w http.ResponseWriter, r *http.Request) {
 	}
 
 	response := &GetPointsResponse{Points: points}
-	render.Render(w, r, response)
+	if err := render.Render(w, r, response); err != nil {
+		http.Error(w, "Failed to render response", http.StatusInternalServerError)
+	}
 }
 
 // HealthCheck godoc
@@ -116,5 +122,7 @@ func (h *Handler) GetReceiptPoints(w http.ResponseWriter, r *http.Request) {
 // @Router /healthz [get]
 func (h *Handler) HealthCheck(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("OK"))
+	if _, err := w.Write([]byte("OK")); err != nil {
+		http.Error(w, "Failed to write response", http.StatusInternalServerError)
+	}
 }
