@@ -1,5 +1,7 @@
 package model
 
+import "net/http"
+
 // Receipt represents a receipt with necessary fields
 type Receipt struct {
 	Retailer     string `json:"retailer" validate:"required,printascii"`
@@ -13,4 +15,9 @@ type Receipt struct {
 type Item struct {
 	ShortDescription string `json:"shortDescription" validate:"required,printascii"`
 	Price            string `json:"price" validate:"required,price"`
+}
+
+// Bind
+func (r *Receipt) Bind(req *http.Request) error {
+	return nil
 }

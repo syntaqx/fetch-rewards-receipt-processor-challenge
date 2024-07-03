@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"encoding/json"
 	"net/http"
 	"regexp"
 
@@ -62,7 +61,7 @@ func (resp *ProcessReceiptResponse) Render(_ http.ResponseWriter, _ *http.Reques
 //	@Router			/receipts/process [post]
 func (h *ReceiptHandler) ProcessReceipt(w http.ResponseWriter, r *http.Request) {
 	var receipt model.Receipt
-	if err := json.NewDecoder(r.Body).Decode(&receipt); err != nil {
+	if err := render.Bind(r, &receipt); err != nil {
 		http.Error(w, "Invalid receipt", http.StatusBadRequest)
 		return
 	}
