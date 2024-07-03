@@ -17,16 +17,16 @@ import (
 	"github.com/syntaqx/fetch-rewards-receipt-processor-challenge/internal/repository"
 )
 
-// @title Receipt Processor API
-// @version 1.0
-// @description This is a simple receipt processor API.
-// @termsOfService http://swagger.io/terms/
+//	@title			Receipt Processor API
+//	@version		1.0
+//	@description	This is a simple receipt processor API.
+//	@termsOfService	http://swagger.io/terms/
 
-// @license.name MIT
-// @license.url https://opensource.org/licenses/MIT
+//	@license.name	MIT
+//	@license.url	https://opensource.org/licenses/MIT
 
-// @host localhost:8080
-// @BasePath /
+//	@host		localhost:8080
+//	@BasePath	/
 func main() {
 	r := chi.NewRouter()
 

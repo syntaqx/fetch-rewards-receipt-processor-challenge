@@ -28,12 +28,12 @@ func (resp *HealthCheckResponse) Render(_ http.ResponseWriter, _ *http.Request) 
 }
 
 // HealthCheck godoc
-// @Summary Health check endpoint
-// @Description Returns 200 if the server is running
-// @Tags health
-// @Produce  json
-// @Success 200 {object} HealthCheckResponse
-// @Router /healthz [get]
+//	@Summary		Health check endpoint
+//	@Description	Returns 200 if the server is running
+//	@Tags			health
+//	@Produce		json
+//	@Success		200	{object}	HealthCheckResponse
+//	@Router			/healthz [get]
 func (h *HealthHandler) HealthCheck(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	response := &HealthCheckResponse{Status: "OK"}

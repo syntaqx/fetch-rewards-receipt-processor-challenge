@@ -49,16 +49,16 @@ func (resp *ProcessReceiptResponse) Render(_ http.ResponseWriter, _ *http.Reques
 }
 
 // ProcessReceipt godoc
-// @Summary Submit a receipt for processing
-// @Description Submits a receipt for processing
-// @Tags receipts
-// @Accept  json
-// @Produce  json
-// @Param receipt body model.Receipt true "Receipt"
-// @Success 200 {object} ProcessReceiptResponse
-// @Failure 400 {string} string "Invalid receipt"
-// @Failure 500 {string} string "Failed to generate ID"
-// @Router /receipts/process [post]
+//	@Summary		Submit a receipt for processing
+//	@Description	Submits a receipt for processing
+//	@Tags			receipts
+//	@Accept			json
+//	@Produce		json
+//	@Param			receipt	body		model.Receipt	true	"Receipt"
+//	@Success		200		{object}	ProcessReceiptResponse
+//	@Failure		400		{string}	string	"Invalid receipt"
+//	@Failure		500		{string}	string	"Failed to generate ID"
+//	@Router			/receipts/process [post]
 func (h *ReceiptHandler) ProcessReceipt(w http.ResponseWriter, r *http.Request) {
 	var receipt model.Receipt
 	if err := json.NewDecoder(r.Body).Decode(&receipt); err != nil {
@@ -96,14 +96,14 @@ func (resp *GetPointsResponse) Render(_ http.ResponseWriter, _ *http.Request) er
 }
 
 // GetReceiptPoints godoc
-// @Summary Get the points awarded for a receipt
-// @Description Returns the points awarded for the receipt
-// @Tags receipts
-// @Produce  json
-// @Param id path string true "Receipt ID"
-// @Success 200 {object} GetPointsResponse
-// @Failure 404 {string} string "No receipt found for that id"
-// @Router /receipts/{id}/points [get]
+//	@Summary		Get the points awarded for a receipt
+//	@Description	Returns the points awarded for the receipt
+//	@Tags			receipts
+//	@Produce		json
+//	@Param			id	path		string	true	"Receipt ID"
+//	@Success		200	{object}	GetPointsResponse
+//	@Failure		404	{string}	string	"No receipt found for that id"
+//	@Router			/receipts/{id}/points [get]
 func (h *ReceiptHandler) GetReceiptPoints(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 
