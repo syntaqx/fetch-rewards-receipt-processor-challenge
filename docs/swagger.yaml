@@ -55,6 +55,19 @@ info:
   title: Receipt Processor API
   version: "1.0"
 paths:
+  /healthz:
+    get:
+      description: Returns 200 if the server is running
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Health check endpoint
+      tags:
+      - health
   /receipts/{id}/points:
     get:
       description: Returns the points awarded for the receipt
