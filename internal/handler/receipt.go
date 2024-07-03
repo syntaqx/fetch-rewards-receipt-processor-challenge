@@ -14,17 +14,23 @@ import (
 	"github.com/syntaqx/fetch-rewards-receipt-processor-challenge/pkg/points"
 )
 
-type Handler struct {
+type ReceiptHandler struct {
 	validate *validator.Validate
 	repo     repository.ReceiptRepository
 }
 
-func NewHandler(validate *validator.Validate, repo repository.ReceiptRepository) *Handler {
+func NewReceiptHandler(validate *validator.Validate, repo repository.ReceiptRepository) *ReceiptHandler {
 	// Register the custom validation function
 	if err := validate.RegisterValidation("price", validatePrice); err != nil {
 		panic(err)
 	}
-	return &Handler{validate: validate, repo: repo}
+	return &ReceiptHandler{validate: validate, repo: repo}
+}
+
+// RegisterRoutes registers the receipt handler routes.
+func (h *ReceiptHandler) RegisterRoutes(r chi.Router) {
+	r.Post("/receipts/process", h.ProcessReceipt)
+	r.Get("/receipts/{id}/points", h.GetReceiptPoints)
 }
 
 // Custom validation function for price format
@@ -53,7 +59,7 @@ func (resp *ProcessReceiptResponse) Render(_ http.ResponseWriter, _ *http.Reques
 // @Failure 400 {string} string "Invalid receipt"
 // @Failure 500 {string} string "Failed to generate ID"
 // @Router /receipts/process [post]
-func (h *Handler) ProcessReceipt(w http.ResponseWriter, r *http.Request) {
+func (h *ReceiptHandler) ProcessReceipt(w http.ResponseWriter, r *http.Request) {
 	var receipt model.Receipt
 	if err := json.NewDecoder(r.Body).Decode(&receipt); err != nil {
 		http.Error(w, "Invalid receipt", http.StatusBadRequest)
@@ -98,7 +104,7 @@ func (resp *GetPointsResponse) Render(_ http.ResponseWriter, _ *http.Request) er
 // @Success 200 {object} GetPointsResponse
 // @Failure 404 {string} string "No receipt found for that id"
 // @Router /receipts/{id}/points [get]
-func (h *Handler) GetReceiptPoints(w http.ResponseWriter, r *http.Request) {
+func (h *ReceiptHandler) GetReceiptPoints(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 
 	points, exists := h.repo.GetPoints(id)
@@ -110,19 +116,5 @@ func (h *Handler) GetReceiptPoints(w http.ResponseWriter, r *http.Request) {
 	response := &GetPointsResponse{Points: points}
 	if err := render.Render(w, r, response); err != nil {
 		http.Error(w, "Failed to render response", http.StatusInternalServerError)
-	}
-}
-
-// HealthCheck godoc
-// @Summary Health check endpoint
-// @Description Returns 200 if the server is running
-// @Tags health
-// @Produce  json
-// @Success 200 {string} string "OK"
-// @Router /healthz [get]
-func (h *Handler) HealthCheck(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	if _, err := w.Write([]byte("OK")); err != nil {
-		http.Error(w, "Failed to write response", http.StatusInternalServerError)
 	}
 }

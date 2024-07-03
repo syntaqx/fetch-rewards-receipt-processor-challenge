@@ -22,12 +22,8 @@ import (
 // @description This is a simple receipt processor API.
 // @termsOfService http://swagger.io/terms/
 
-// @contact.name API Support
-// @contact.url http://www.swagger.io/support
-// @contact.email support@swagger.io
-
-// @license.name Apache 2.0
-// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @license.name MIT
+// @license.url https://opensource.org/licenses/MIT
 
 // @host localhost:8080
 // @BasePath /
@@ -46,12 +42,13 @@ func main() {
 	validate := validator.New()
 	repo := repository.NewReceiptRepository()
 
-	// Initialize handler with dependencies
-	h := handler.NewHandler(validate, repo)
+	// Initialize handlers with dependencies
+	receiptHandler := handler.NewReceiptHandler(validate, repo)
+	healthHandler := handler.NewHealthHandler()
 
-	r.Post("/receipts/process", h.ProcessReceipt)
-	r.Get("/receipts/{id}/points", h.GetReceiptPoints)
-	r.Get("/healthz", h.HealthCheck)
+	// Register routes
+	receiptHandler.RegisterRoutes(r)
+	healthHandler.RegisterRoutes(r)
 
 	// Swagger UI
 	r.Get("/swagger/*", httpSwagger.WrapHandler)
