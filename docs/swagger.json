@@ -28,7 +28,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/handler.HealthCheckResponse"
                         }
                     }
                 }
@@ -122,6 +122,14 @@
             "properties": {
                 "points": {
                     "type": "integer"
+                }
+            }
+        },
+        "handler.HealthCheckResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string"
                 }
             }
         },

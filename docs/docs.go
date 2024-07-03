@@ -34,7 +34,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/handler.HealthCheckResponse"
                         }
                     }
                 }
@@ -128,6 +128,14 @@ const docTemplate = `{
             "properties": {
                 "points": {
                     "type": "integer"
+                }
+            }
+        },
+        "handler.HealthCheckResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string"
                 }
             }
         },

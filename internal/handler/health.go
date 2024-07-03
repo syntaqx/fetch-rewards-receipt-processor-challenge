@@ -32,7 +32,7 @@ func (resp *HealthCheckResponse) Render(_ http.ResponseWriter, _ *http.Request) 
 // @Description Returns 200 if the server is running
 // @Tags health
 // @Produce  json
-// @Success 200 {string} string "OK"
+// @Success 200 {object} HealthCheckResponse
 // @Router /healthz [get]
 func (h *HealthHandler) HealthCheck(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)

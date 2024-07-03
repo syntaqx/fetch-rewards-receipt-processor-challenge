@@ -5,6 +5,11 @@ definitions:
       points:
         type: integer
     type: object
+  handler.HealthCheckResponse:
+    properties:
+      status:
+        type: string
+    type: object
   handler.ProcessReceiptResponse:
     properties:
       id:
@@ -61,7 +66,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: string
+            $ref: '#/definitions/handler.HealthCheckResponse'
       summary: Health check endpoint
       tags:
       - health
