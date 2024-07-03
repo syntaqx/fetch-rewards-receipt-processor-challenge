@@ -36,5 +36,8 @@ func (resp *HealthCheckResponse) Render(_ http.ResponseWriter, _ *http.Request) 
 // @Router /healthz [get]
 func (h *HealthHandler) HealthCheck(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
-	render.Render(w, r, &HealthCheckResponse{Status: "OK"})
+	response := &HealthCheckResponse{Status: "OK"}
+	if err := render.Render(w, r, response); err != nil {
+		http.Error(w, "Failed to render response", http.StatusInternalServerError)
+	}
 }
