@@ -1,0 +1,166 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a simple receipt processor API.",
+        "title": "Receipt Processor API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/receipts/process": {
+            "post": {
+                "description": "Submits a receipt for processing",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "receipts"
+                ],
+                "summary": "Submit a receipt for processing",
+                "parameters": [
+                    {
+                        "description": "Receipt",
+                        "name": "receipt",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Receipt"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handler.ProcessReceiptResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid receipt",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to generate ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/receipts/{id}/points": {
+            "get": {
+                "description": "Returns the points awarded for the receipt",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "receipts"
+                ],
+                "summary": "Get the points awarded for a receipt",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Receipt ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handler.GetPointsResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "No receipt found for that id",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "handler.GetPointsResponse": {
+            "type": "object",
+            "properties": {
+                "points": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handler.ProcessReceiptResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Item": {
+            "type": "object",
+            "required": [
+                "price",
+                "shortDescription"
+            ],
+            "properties": {
+                "price": {
+                    "type": "string"
+                },
+                "shortDescription": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Receipt": {
+            "type": "object",
+            "required": [
+                "items",
+                "purchaseDate",
+                "purchaseTime",
+                "retailer",
+                "total"
+            ],
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Item"
+                    }
+                },
+                "purchaseDate": {
+                    "type": "string"
+                },
+                "purchaseTime": {
+                    "type": "string"
+                },
+                "retailer": {
+                    "type": "string"
+                },
+                "total": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

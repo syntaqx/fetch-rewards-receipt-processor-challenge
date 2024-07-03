@@ -1,0 +1,111 @@
+basePath: /
+definitions:
+  handler.GetPointsResponse:
+    properties:
+      points:
+        type: integer
+    type: object
+  handler.ProcessReceiptResponse:
+    properties:
+      id:
+        type: string
+    type: object
+  model.Item:
+    properties:
+      price:
+        type: string
+      shortDescription:
+        type: string
+    required:
+    - price
+    - shortDescription
+    type: object
+  model.Receipt:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/model.Item'
+        type: array
+      purchaseDate:
+        type: string
+      purchaseTime:
+        type: string
+      retailer:
+        type: string
+      total:
+        type: string
+    required:
+    - items
+    - purchaseDate
+    - purchaseTime
+    - retailer
+    - total
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a simple receipt processor API.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Receipt Processor API
+  version: "1.0"
+paths:
+  /receipts/{id}/points:
+    get:
+      description: Returns the points awarded for the receipt
+      parameters:
+      - description: Receipt ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.GetPointsResponse'
+        "404":
+          description: No receipt found for that id
+          schema:
+            type: string
+      summary: Get the points awarded for a receipt
+      tags:
+      - receipts
+  /receipts/process:
+    post:
+      consumes:
+      - application/json
+      description: Submits a receipt for processing
+      parameters:
+      - description: Receipt
+        in: body
+        name: receipt
+        required: true
+        schema:
+          $ref: '#/definitions/model.Receipt'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ProcessReceiptResponse'
+        "400":
+          description: Invalid receipt
+          schema:
+            type: string
+        "500":
+          description: Failed to generate ID
+          schema:
+            type: string
+      summary: Submit a receipt for processing
+      tags:
+      - receipts
+swagger: "2.0"
