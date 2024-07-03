@@ -9,8 +9,8 @@ import (
 	"github.com/go-chi/render"
 	"github.com/go-playground/validator/v10"
 	"github.com/gofrs/uuid/v5"
-	"github.com/syntaqx/fetch-rewards-receipt-processor-challenge/internal/model"
 	"github.com/syntaqx/fetch-rewards-receipt-processor-challenge/internal/repository"
+	"github.com/syntaqx/fetch-rewards-receipt-processor-challenge/pkg/model"
 	"github.com/syntaqx/fetch-rewards-receipt-processor-challenge/pkg/points"
 )
 
@@ -49,6 +49,7 @@ func (resp *ProcessReceiptResponse) Render(_ http.ResponseWriter, _ *http.Reques
 }
 
 // ProcessReceipt godoc
+//
 //	@Summary		Submit a receipt for processing
 //	@Description	Submits a receipt for processing
 //	@Tags			receipts
@@ -96,6 +97,7 @@ func (resp *GetPointsResponse) Render(_ http.ResponseWriter, _ *http.Request) er
 }
 
 // GetReceiptPoints godoc
+//
 //	@Summary		Get the points awarded for a receipt
 //	@Description	Returns the points awarded for the receipt
 //	@Tags			receipts

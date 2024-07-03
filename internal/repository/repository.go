@@ -3,7 +3,7 @@ package repository
 import (
 	"sync"
 
-	"github.com/syntaqx/fetch-rewards-receipt-processor-challenge/internal/model"
+	"github.com/syntaqx/fetch-rewards-receipt-processor-challenge/pkg/model"
 )
 
 type ReceiptRepository interface {

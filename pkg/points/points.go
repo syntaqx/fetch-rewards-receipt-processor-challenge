@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/syntaqx/fetch-rewards-receipt-processor-challenge/internal/model"
+	"github.com/syntaqx/fetch-rewards-receipt-processor-challenge/pkg/model"
 )
 
 func CalculatePoints(receipt model.Receipt) int64 {

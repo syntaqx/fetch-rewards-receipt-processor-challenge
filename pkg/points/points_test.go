@@ -3,7 +3,7 @@ package points
 import (
 	"testing"
 
-	"github.com/syntaqx/fetch-rewards-receipt-processor-challenge/internal/model"
+	"github.com/syntaqx/fetch-rewards-receipt-processor-challenge/pkg/model"
 )
 
 func TestCalculatePoints(t *testing.T) {
