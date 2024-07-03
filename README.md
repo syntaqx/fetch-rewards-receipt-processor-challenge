@@ -3,6 +3,54 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/syntaqx/fetch-rewards-receipt-processor-challenge)](https://goreportcard.com/report/github.com/syntaqx/fetch-rewards-receipt-processor-challenge)
 [![codecov](https://codecov.io/gh/syntaqx/fetch-rewards-receipt-processor-challenge/graph/badge.svg?token=V7SJ4M7J8S)](https://codecov.io/gh/syntaqx/fetch-rewards-receipt-processor-challenge)
 
+## Prerequisites
+
+- [Git](https://git-scm.com/downloads)
+- [Docker](https://docs.docker.com/get-docker/)
+
+## Getting started
+
+### Clone the repository
+
+```sh
+git clone git@github.com:syntaqx/fetch-rewards-receipt-processor-challenge && cd "$(basename "$_")"
+```
+
+### Starting the environment
+
+```sh
+docker compose up -d --build
+```
+
+> [!NOTE]
+> You may prefer to develop using `go` directly. You can reference the
+> `Dockerfile` for necessary steps to run the code on your system, but given the
+> steps will be different for each host operating system and their versions,
+> this route will remain undocumented.
+
+#### Binding to localhost
+
+In order to access the container ports over `localhost` you'll need to override
+the default `compose.yml` port values and specify your preferred host port.
+To use the default values, or quickly populate the file, simply:
+
+```sh
+cp compose.override.example.yml compose.override.yml
+```
+
+> [!NOTE]
+> Any changes made to the `compose.override.yml` will be ignored by git, to feel
+> free to use this to make any environment-specific changes or overrides without
+> affecting others local settings.
+
+Then (re)start your containers with the new port bindings:
+
+```sh
+docker compose up -d
+```
+
+## Challenge
+
 Build a webservice that fulfils the documented API. The API is described below. A formal definition is provided
 in the [api.yml](./api.yml) file, but the information in this README is sufficient for completion of this challenge. We will use the
 described API to test your solution.
